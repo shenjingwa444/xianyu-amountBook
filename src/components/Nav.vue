@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <Icon name="money_bag_fill"/>
-    <router-link to="/money">记账</router-link>
-    |
-    <Icon name="labels"/>
-    <router-link to="/labels">标签</router-link>
-    |
-    <Icon name="统计"/>
-    <router-link to="/statistics">统计</router-link>
-  </div>
+  <nav>
+    <router-link to="/money" class="item">
+      <Icon name="money_bag_fill" />
+      记账
+    </router-link>
+    <router-link to="/labels" class="item">
+      <Icon name="labels" />
+      标签
+    </router-link>
+    <router-link to="/statistics" class="item">
+      <Icon name="统计" />
+      统计
+    </router-link>
+  </nav>
 </template>
 
 <script lang="ts">
@@ -20,5 +24,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+nav {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  font-size: 12px;
 
+  > .item {
+    width: 33.3333%;
+    padding: 2px 0;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
 </style>
