@@ -9,7 +9,7 @@
 <!--    <router-view/>-->
   </div>
 </template>
-
+//App 的样式不能加 scope，否则就只能在这一个页面生效。
 <style lang="scss">
 @import '~@/assets/style/helper.scss';
 @import '~@/assets/style/reset.scss';
