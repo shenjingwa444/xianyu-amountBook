@@ -1,16 +1,30 @@
 <template>
   <div>
+    {{value}}
     <label class="notes">
       <span class="name">备注</span>
-      <input type="text" placeholder="请在这里输入备注">
+<!--         :value="value"
+             @input="onInput"
+             @input="value=$event.target.value"-->
+      <input type="text"
+             v-model="value"
+             placeholder="请在这里输入备注">
     </label>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: 'Notes'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class Notes extends Vue {
+  value = '';
+  // onInput(event: KeyboardEvent) {
+  //   const input = event.target as HTMLButtonElement;
+  //   this.value = input.value;
+  // }
+}
 </script>
 
 <style lang="scss" scoped>

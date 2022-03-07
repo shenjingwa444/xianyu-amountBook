@@ -30,7 +30,7 @@ export default class NumberPad extends Vue {
 
   inputContent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement;  //强制指定为 Button类型
-    const input = button.textContent!;  //强制 input 不能为空
+    const input = button.textContent!;  //强制 input 不能为空，button如果为图片，图片没有textContent。
     if (this.output.length === 16) {return;}
     if (this.output === '0') {
       if ('0123456789'.indexOf(input) >= 0) {
