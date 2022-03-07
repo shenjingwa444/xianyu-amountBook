@@ -35,7 +35,7 @@ export default class Types extends Vue{
     if(this.xxx === undefined){  //声明时类型可以为 undefined，使用时必须判断是否为 undefined;
       console.log('undefined');
     }else{
-      console.log(this.xxx.toString())
+      return
     }
   }
 }
