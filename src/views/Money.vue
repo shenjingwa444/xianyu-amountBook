@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    {{recordList}}
+    {{ recordList }}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <Notes :value='record.notes' @update:value="onUpdateNotes"/>
@@ -15,9 +15,13 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import {Component, Watch} from 'vue-property-decorator';
+import model from './model';
+//const model = require('@/views/model.ts').default;
+//const {model} = require('@/views/model.js');
+
+const recordList = model.fetch();
 
 // const version = window.localStorage.getItem('version')
-// const recordList:Record[] =JSON.parse(window.localStorage.getItem('recordList') || '[]')
 // if(version === '0.0.1'){
 //   //数据库升级，数据迁移
 //   recordList.forEach(record =>{
@@ -31,41 +35,37 @@ import {Component, Watch} from 'vue-property-decorator';
 // //升级版本
 // window.localStorage.setItem('version','0.0.2')
 
-
-// ts 声明类型
-type Record = {
-  //tags?:string[]  加问号之后，表示这个 Key 可以不要，有可能有，有可能没有
-  tags:string[]
-  type:string
-  notes:string
-  amount:number
-  createAt?:Date
-}
 @Component({
   components: {Notes, Types, NumberPad, Tags},
 })
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行'];
-  record:Record={
-    tags:[],type:'_',notes:'',amount:0
+  record: RecordItem = {
+    tags: [], type: '_', notes: '', amount: 0
+  };
+  recordList:RecordItem[]= recordList;
+
+  onUpdateTags(value: string[]) {
+    this.record.tags = value;
   }
-  recordList:Record[] =JSON.parse(window.localStorage.getItem('recordList') || '[]')
-  onUpdateTags(value:string[]){
-    this.record.tags = value
+
+  onUpdateNotes(value: string) {
+    this.record.notes = value;
   }
-  onUpdateNotes(value:string){
-    this.record.notes = value
-  }
-  saveRecord(){
+
+  saveRecord() {
     //record2 深拷贝 record ，record 是对象，传值，不能直接Push
-    const record2:Record = JSON.parse(JSON.stringify(this.record))
-    record2.createAt = new Date()
-    this.recordList.push(record2)
+    const record2: RecordItem = model.clone(this.record);
+    record2.createAt = new Date();
+    this.recordList.push(record2);
   }
+
   @Watch('recordList')
-  onRecordListChange(){
-    window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
+  onRecordListChange() {
+    model.save(this.recordList)
+    // window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
+
   //当使用 .sync 时，value 会自动赋值给 record.type
   // onUpdateType(value:string){
   //   this.record.type = value
