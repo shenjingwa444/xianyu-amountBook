@@ -16,11 +16,6 @@
 </template>
 
 <script lang="ts">
-import Icon from '@/components/Icons.vue';
-
-export default {
-  components: {Icon}
-};
 </script>
 
 <style lang="scss" scoped>

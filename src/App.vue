@@ -14,6 +14,7 @@
 @import '~@/assets/style/helper.scss';
 @import '~@/assets/style/reset.scss';
 body{
+  background-color: #f5f5f5;
 }
 #app {
   line-height: 1.5;
@@ -21,7 +22,6 @@ body{
   font-family: $font-hei;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #333;
 }
 </style>

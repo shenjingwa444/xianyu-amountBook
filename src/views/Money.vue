@@ -1,6 +1,5 @@
 <template>
   <Layout class-prefix="layout">
-    {{ recordList }}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <Notes :value='record.notes' @update:value="onUpdateNotes"/>
@@ -15,12 +14,13 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import {Component, Watch} from 'vue-property-decorator';
-import model from './model';
-//const model = require('@/views/model.ts').default;
-//const {model} = require('@/views/model.js');
+import recordModel from '../models/recordModel';
+import newTagModel from '@/models/newTagModel';
+//const recordModel = require('@/views/recordModel.ts').default;
+//const {recordModel} = require('@/views/recordModel.js');
 
-const recordList = model.fetch();
-
+const recordList = recordModel.fetch();
+const tagList = newTagModel.fetch()
 // const version = window.localStorage.getItem('version')
 // if(version === '0.0.1'){
 //   //数据库升级，数据迁移
@@ -39,7 +39,7 @@ const recordList = model.fetch();
   components: {Notes, Types, NumberPad, Tags},
 })
 export default class Money extends Vue {
-  tags = ['衣', '食', '住', '行'];
+  tags = tagList;
   record: RecordItem = {
     tags: [], type: '_', notes: '', amount: 0
   };
@@ -55,14 +55,14 @@ export default class Money extends Vue {
 
   saveRecord() {
     //record2 深拷贝 record ，record 是对象，传值，不能直接Push
-    const record2: RecordItem = model.clone(this.record);
+    const record2: RecordItem = recordModel.clone(this.record);
     record2.createAt = new Date();
     this.recordList.push(record2);
   }
 
   @Watch('recordList')
   onRecordListChange() {
-    model.save(this.recordList)
+    recordModel.save(this.recordList)
     // window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
 
