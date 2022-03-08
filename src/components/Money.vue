@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    {{recordList }}
+    {{recordList}}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <Notes :value='record.notes' @update:value="onUpdateNotes"/>
@@ -16,7 +16,22 @@ import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import {Component, Watch} from 'vue-property-decorator';
 
-window.localStorage.setItem('version','0.0.1')
+// const version = window.localStorage.getItem('version')
+// const recordList:Record[] =JSON.parse(window.localStorage.getItem('recordList') || '[]')
+// if(version === '0.0.1'){
+//   //数据库升级，数据迁移
+//   recordList.forEach(record =>{
+//     record.createAt = new Date(2020,1,1)
+//   })
+//   //保留数据
+//   window.localStorage.setItem('recordList',JSON.stringify(recordList))
+// }else if(version === '0.0.2'){
+//   //迁移数据
+// }
+// //升级版本
+// window.localStorage.setItem('version','0.0.2')
+
+
 // ts 声明类型
 type Record = {
   //tags?:string[]  加问号之后，表示这个 Key 可以不要，有可能有，有可能没有
