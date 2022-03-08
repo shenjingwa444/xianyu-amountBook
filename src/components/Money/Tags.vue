@@ -19,6 +19,7 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Tags extends Vue {
+  //dataSource 是外部数据，原则上是不能在这里给值的，所以初始值为 undefined，而不是 [];
   @Prop() dataSource: string [] | undefined;
   selectedTags: string[] = [];
 
@@ -29,6 +30,7 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.splice(index, 1);
     }
+    this.$emit('update:value',this.selectedTags)
   }
 
   create(tag: string) {
