@@ -8,18 +8,23 @@
       </router-link>
     </div>
     <div class="createTag-wrapper">
-      <button class="createTag" @click="createTag">新建标签</button>
+      <Button class="createTag" @click="createTag"
+        >新建标签
+      </Button>
     </div>
   </Layout>
 </template>
-
+<!--  @click.native = "createTag "   Button可直接触发原生 click 事件，不需要 Button.vue 的$emit()-->
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import newTagModel from '@/models/newTagModel.ts';
+import Button from '@/components/Button.vue';
 
 newTagModel.fetch();
-@Component
+@Component({
+  components: {Button}
+})
 export default class Labels extends Vue {
   tags = newTagModel.data;
 
