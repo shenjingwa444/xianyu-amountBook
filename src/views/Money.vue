@@ -59,15 +59,12 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    //record2 深拷贝 record ，record 是对象，传值，不能直接Push
-    const record2: RecordItem = recordModel.clone(this.record);
-    record2.createAt = new Date();
-    this.recordList.push(record2);
+    recordModel.create(this.record)
   }
 
   @Watch('recordList')
   onRecordListChange() {
-    recordModel.save(this.recordList)
+    recordModel.save()
     // window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
 
