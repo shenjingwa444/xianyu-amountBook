@@ -25,7 +25,6 @@ import newTagModel from '@/models/newTagModel';
 //const {recordModel} = require('@/views/recordModel.js');
 
 const recordList = recordModel.fetch();
-const tagList = newTagModel.fetch()
 // const version = window.localStorage.getItem('version')
 // if(version === '0.0.1'){
 //   //数据库升级，数据迁移
@@ -44,7 +43,7 @@ const tagList = newTagModel.fetch()
   components: {FormItem,Types, NumberPad, Tags},
 })
 export default class Money extends Vue {
-  tags = tagList;
+  tags = window.tagList;
   record: RecordItem = {
     tags: [], type: '_', notes: '', amount: 0
   };
