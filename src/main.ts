@@ -6,8 +6,6 @@ import store from './store';
 import Nav from '@/components/Nav.vue';
 import Layout from '@/components/Layout.vue';
 import Icons from '@/components/Icons.vue';
-import newTagModel from '@/models/newTagModel';
-import recordModel from '@/models/recordModel';
 
 Vue.config.productionTip = false;
 Vue.component('Nav', Nav);

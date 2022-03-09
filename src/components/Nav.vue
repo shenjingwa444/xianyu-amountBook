@@ -14,8 +14,11 @@
     </router-link>
   </nav>
 </template>
-F
+
 <script lang="ts">
+export default {
+  name:'Nav'
+}
 </script>
 
 <style lang="scss" scoped>
