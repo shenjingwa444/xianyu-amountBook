@@ -4,7 +4,7 @@
       <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag.id"
+      <li v-for="tag in tagList" :key="tag.id"
           :class="{selected:selectedTags.indexOf(tag)>=0}"
           @click="toggle(tag)">
         {{ tag.name }}
@@ -15,12 +15,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
+import store from '@/store/index2';
 
 @Component
 export default class Tags extends Vue {
-  //dataSource 是外部数据，原则上是不能在这里给值的，所以初始值为 undefined，而不是 [];
-  @Prop() dataSource: string [] | undefined;
+  tagList = store.fetchTags();
   selectedTags: string[] = [];
 
   toggle(tag: string) {
@@ -30,23 +30,20 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.splice(index, 1);
     }
-    this.$emit('update:value',this.selectedTags)
+    this.$emit('update:value', this.selectedTags);
   }
 
   create(tag: string) {
     const name = window.prompt('请输入标签名');
-    if (name === '') {
-      window.alert('标签名不能为空');
-    } else if (this.dataSource) {
-      //如果 dataSource 不为空，那么将之前的 dataSource 加上现在添加的 name 作为新的值，传给 dataSource.
-      this.$emit('update:dataSource', [...this.dataSource, name]);
-    }
+    if (!name) { return window.alert('标签名不能为空')}
+    store.createTag(name);
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @use "sass:math";
+
 .tags {
   background-color: white;
   font-size: 14px;
@@ -65,7 +62,7 @@ export default class Tags extends Vue {
       $h: 24px;
       height: $h;
       line-height: $h;
-      border-radius: math.div($h,2);
+      border-radius: math.div($h, 2);
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 4px;
