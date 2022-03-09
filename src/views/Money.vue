@@ -20,7 +20,6 @@ import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import {Component, Watch} from 'vue-property-decorator';
 import recordModel from '../models/recordModel';
-import newTagModel from '@/models/newTagModel';
 //const recordModel = require('@/views/recordModel.ts').default;
 //const {recordModel} = require('@/views/recordModel.js');
 

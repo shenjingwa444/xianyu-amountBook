@@ -21,7 +21,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import newTagModel from '@/models/newTagModel';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
 
@@ -29,37 +28,34 @@ import Button from '@/components/Button.vue';
   components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
-  tag?: { id: string, name: string } = undefined;
+  tag?:{id:string,name:string} = undefined;
 
   created() {
-    const id = this.$route.params.id;
-    newTagModel.fetch();
-    const tags = newTagModel.data;
-    const tag = tags.filter(tag => tag.id === id)[0];
     //从 url 的 id 获得tag, 赋值到 data.tag 然后展示在页面上；
-    if (tag) {
-      this.tag = tag;
-    } else {
+    this.tag = window.findTag(this.$route.params.id);
+    if (!this.tag) {
       this.$router.replace('/404');
     }
   }
 
   update(name: string) {
     if (this.tag) {
-      newTagModel.update(this.tag.id, name);
-      console.log(this.tag.id, name);
+      window.updateTag(this.tag.id, name);
     }
   }
 
   remove() {
     if (this.tag) {
-      if(newTagModel.remove(this.tag.id)){
-        this.$router.back()
+      if (window.removeTag(this.tag.id)) {
+        this.$router.back();
+      } else {
+        window.alert('删除失败');
       }
     }
   }
-  goback(){
-    this.$router.back()
+
+  goback() {
+    this.$router.back();
   }
 }
 </script>
