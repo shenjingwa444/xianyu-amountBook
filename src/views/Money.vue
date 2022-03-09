@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-  {{recordList}}
+    {{ recordList }}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <div class="notes">
@@ -19,6 +19,7 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import {Component, Watch} from 'vue-property-decorator';
+import store from '@/store/index2';
 //const recordModel = require('@/views/recordModel.ts').default;
 //const {recordModel} = require('@/views/recordModel.js');
 
@@ -37,14 +38,14 @@ import {Component, Watch} from 'vue-property-decorator';
 // window.localStorage.setItem('version','0.0.2')
 
 @Component({
-  components: {FormItem,Types, NumberPad, Tags},
+  components: {FormItem, Types, NumberPad, Tags},
 })
 export default class Money extends Vue {
-  tags = window.tagList;
+  tags = store.tagList;
   record: RecordItem = {
     tags: [], type: '_', notes: '', amount: 0
   };
-  recordList = window.recordList;
+  recordList = store.recordList;
 
   onUpdateTags(value: string[]) {
     this.record.tags = value;
@@ -55,7 +56,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    window.createRecord(this.record)
+    store.createRecord(this.record);
   }
 
 
@@ -78,7 +79,8 @@ export default class Money extends Vue {
   display: flex;
   flex-direction: column-reverse;
 }
-.notes{
-  padding:12px 0;
+
+.notes {
+  padding: 12px 0;
 }
 </style>
