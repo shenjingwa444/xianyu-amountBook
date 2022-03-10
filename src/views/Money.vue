@@ -18,7 +18,8 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import {Component} from 'vue-property-decorator';
-import store from '@/store/index2';
+//import oldStore from '@/store/index2';
+import store from '@/store/index';
 //const recordModel = require('@/views/recordModel.ts').default;
 //const {recordModel} = require('@/views/recordModel.js');
 
@@ -38,20 +39,28 @@ import store from '@/store/index2';
 
 @Component({
   components: {FormItem, Types, NumberPad, Tags},
+  computed: {
+    recordList() {
+      return store.state.recordList;
+    },
+  }
 })
 export default class Money extends Vue {
-  tags = store.tagList;
+  //TODO
+  //tags = oldStore.tagList;
+
   record: RecordItem = {
     tags: [], type: '_', notes: '', amount: 0
   };
-  recordList = store.recordList;
-
+  beforeCreate(){
+    this.$store.commit('fetchRecords')
+  }
   onUpdateNotes(value: string) {
     this.record.notes = value;
   }
 
   saveRecord() {
-    store.createRecord(this.record);
+    this.$store.commit('createRecord', this.record);
   }
 
 
