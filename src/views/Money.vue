@@ -17,7 +17,6 @@
 import Vue from 'vue';
 import Tags from '@/components/Money/Tags.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
-import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
@@ -38,7 +37,7 @@ import recordTypeList from '@/constants/recordTypeList';
 // window.localStorage.setItem('version','0.0.2')
 
 @Component({
-  components: {Tabs, FormItem, Types, NumberPad, Tags},
+  components: {Tabs, FormItem,NumberPad, Tags},
 })
 export default class Money extends Vue {
   tags = this.$store.state.tagList;
