@@ -18,10 +18,6 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import {Component} from 'vue-property-decorator';
-//import oldStore from '@/store/index2';
-import store from '@/store/index';
-//const recordModel = require('@/views/recordModel.ts').default;
-//const {recordModel} = require('@/views/recordModel.js');
 
 // const version = window.localStorage.getItem('version')
 // if(version === '0.0.1'){
@@ -41,13 +37,12 @@ import store from '@/store/index';
   components: {FormItem, Types, NumberPad, Tags},
   computed: {
     recordList() {
-      return store.state.recordList;
+      return this.$store.state.recordList;
     },
   }
 })
 export default class Money extends Vue {
-  //TODO
-  //tags = oldStore.tagList;
+  tags = this.$store.state.tagList;
 
   record: RecordItem = {
     tags: [], type: '_', notes: '', amount: 0
@@ -62,15 +57,6 @@ export default class Money extends Vue {
   saveRecord() {
     this.$store.commit('createRecord', this.record);
   }
-
-
-  //当使用 .sync 时，value 会自动赋值给 record.type
-  // onUpdateType(value:string){
-  //   this.record.type = value
-  // }
-  // onUpdateAmount(value:string){
-  //   this.record.amount = parseFloat(value)
-  // }
 }
 </script>
 
