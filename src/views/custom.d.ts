@@ -21,5 +21,6 @@ type TagListModel = {
 type RootState = {
   recordList: RecordItem[],
   tagList: Tag[],
+  createRecordError:Error | null,
   currentTag?: Tag
 }
