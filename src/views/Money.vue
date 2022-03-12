@@ -37,21 +37,25 @@ import recordTypeList from '@/constants/recordTypeList';
 // window.localStorage.setItem('version','0.0.2')
 
 @Component({
-  components: {Tabs, FormItem,NumberPad, Tags},
+  components: {Tabs, FormItem, NumberPad, Tags},
 })
 export default class Money extends Vue {
   tags = this.$store.state.tagList;
-  recordTypeList = recordTypeList
-  get recordList(){
+  recordTypeList = recordTypeList;
+
+  get recordList() {
     return this.$store.state.recordList;
 
   }
+
   record: RecordItem = {
     tags: [], type: '_', notes: '', amount: 0
   };
-  beforeCreate(){
-    this.$store.commit('fetchRecords')
+
+  beforeCreate() {
+    this.$store.commit('fetchRecords');
   }
+
   onUpdateNotes(value: string) {
     this.record.notes = value;
   }
@@ -63,11 +67,8 @@ export default class Money extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.layout-wrapper {
-  //border:1px solid red;
-}
 
-.layout-content {
+::v-deep .layout-content {
   display: flex;
   flex-direction: column-reverse;
 }
