@@ -26,6 +26,8 @@ export default class Tabs extends Vue {
   value!: string;
   @Prop(String)
   classPrefix !: string;
+  @Prop({type:String,default:"64px"})
+  height!:string;
 
   liClass(item: dataSourceItem){
     return {
@@ -49,7 +51,7 @@ export default class Tabs extends Vue {
 
   &-item {
     width: 50%;
-    height: 64px;
+  /*  height: 64px;*/
     display: flex;
     justify-content: center;
     align-items: center;
