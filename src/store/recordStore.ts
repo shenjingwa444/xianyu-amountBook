@@ -13,7 +13,7 @@ const recordStore = {
   createRecord(record: RecordItem){
     //record2 深拷贝 record ，record 是对象，传值，不能直接Push
     const record2: RecordItem = clone(record);
-    record2.createAt = new Date();
+    record2.createAt = new Date().toISOString();
     this.recordList && this.recordList.push(record2);
     recordStore.saveRecords();
   },

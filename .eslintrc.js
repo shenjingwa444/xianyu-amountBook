@@ -1,7 +1,9 @@
 module.exports = {
   "globals":{
     "__WebpackModuleApi":"writable",
-    "RecordItem":true
+    "RecordItem":true,
+    "RootState":true,
+    "Tag":true
   },
   root: true,
   env: {
