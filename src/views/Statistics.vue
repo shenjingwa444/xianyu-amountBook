@@ -49,7 +49,7 @@ export default class Statistics extends Vue {
   }
 
   tagString(tags: Tag[]) {
-    return tags.length === 0 ? '无' : tags.map(t=>t.name).join('，');
+    return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
   }
 
   get recordList() {
@@ -62,7 +62,7 @@ export default class Statistics extends Vue {
     const newList = clone(recordList)
         .filter(i => i.type === this.type)
         .sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
-    if(newList.length === 0){return []}
+    if (newList.length === 0) {return [];}
     type Result = { title: string, total?: number, items: RecordItem[] }[]
     const result: Result = [{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items: [newList[0]]}];
     for (let i = 1; i < newList.length; i++) {
@@ -92,10 +92,11 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.noResult{
-  padding:16px;
-  text-align:center;
+.noResult {
+  padding: 16px;
+  text-align: center;
 }
+
 ::v-deep .type-tabs-item {
   background-color: #c4c4c4;
 

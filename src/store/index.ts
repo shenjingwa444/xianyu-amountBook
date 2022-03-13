@@ -26,7 +26,7 @@ const store = new Vuex.Store({
     createRecord(state, record) {
       //record2 深拷贝 record ，record 是对象，传值，不能直接Push
       const record2: RecordItem = clone(record);
-      record2.createAt = new Date().toISOString();
+      record2.createAt =record2.createAt || new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecords');
     },
