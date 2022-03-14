@@ -58,9 +58,15 @@ export default class Statistics extends Vue {
 
   get x() {
     return {
-      grid:{
-        left:0,
-        right:0,
+      grid: {
+        left: 0,
+        right: 0,
+      },
+      tooltip: {
+        show: true,
+        triggerOn:'click',
+        position:'top',
+        formatter:'{c}',
       },
       xAxis: {
         type: 'category',
@@ -69,7 +75,11 @@ export default class Statistics extends Vue {
           '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
           '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
 
-        ]
+        ],
+        axisTick: {
+          alignWithLabel: true,
+        },
+
       },
       yAxis: {
         type: 'value',
@@ -82,7 +92,16 @@ export default class Statistics extends Vue {
             150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
             150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
           ],
-          type: 'line'
+          type: 'line',
+          symbolSize: 12,
+          symbol: 'circle',
+          lineStyle: {
+            color: '#666',
+          },
+          itemStyle: {
+            borderColor: '#666',
+            color:'#666',
+          }
         }
       ]
     };
@@ -123,11 +142,7 @@ export default class Statistics extends Vue {
   }
 
   mounted() {
-    console.log('1');
-    const div1 = (this.$refs.chartWrapper) as HTMLDivElement
-    console.log(div1)
-    div1.scrollLeft = 9999;
-    console.log(div1.scrollLeft);
+    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
   }
 
   type = '-';
@@ -141,7 +156,11 @@ export default class Statistics extends Vue {
   height: 400px;
 
   &-wrapper {
-    overflow:auto;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
