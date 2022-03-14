@@ -36,7 +36,6 @@ export default class Tabs extends Vue {
 
   select(item: dataSourceItem) {
     this.$emit('update:value', item.value);
-    console.log(item.value)
   }
 }
 </script>

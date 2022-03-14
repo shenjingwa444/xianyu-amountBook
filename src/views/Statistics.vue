@@ -61,9 +61,9 @@ export default class Statistics extends Vue {
     const array = [];
     for (let i = 0; i <= 29; i++) {
       const dateString = dayjs(today).subtract(i, 'day').format('YYYY-MM-DD');
-      const found = _.find(this.recordList, {createAt: dateString});
+      const found = _.find(this.groupedList, {title: dateString});
       array.push({
-        key: dateString, value: found ? found.amount : 0
+        key: dateString, value: found ? found.total : 0
       });
     }
     array.sort((a, b) => {
@@ -129,7 +129,6 @@ export default class Statistics extends Vue {
 
   get recordList() {
     return (this.$store.state as RootState).recordList;
-
   }
 
   get groupedList() {
