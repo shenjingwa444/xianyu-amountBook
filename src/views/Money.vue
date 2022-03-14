@@ -29,6 +29,7 @@ import FormItem from '@/components/Money/FormItem.vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
+import dayjs from 'dayjs';
 @Component({
   components: {Tabs, FormItem, NumberPad, Tags},
 })

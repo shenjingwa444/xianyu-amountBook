@@ -30,7 +30,7 @@ import recordTypeList from '@/constants/recordTypeList';
 import dayjs from 'dayjs';
 import clone from '@/components/lib/clone';
 import Chart from '@/components/Chart.vue';
-
+import _ from 'lodash';
 
 @Component({
   components: {Tabs, Chart}
@@ -56,7 +56,31 @@ export default class Statistics extends Vue {
     return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
   }
 
+  get y() {
+    const today = new Date();
+    const array = [];
+    for (let i = 0; i <= 29; i++) {
+      const dateString = dayjs(today).subtract(i, 'day').format('YYYY-MM-DD');
+      const found = _.find(this.recordList, {createAt: dateString});
+      array.push({
+        date: dateString, value: found ? found.amount : 0
+      });
+    }
+    array.sort((a, b) => {
+      if (a.date > b.date) {
+        return 1;
+      } else if (a.date === b.date) {
+        return 0;
+      } else {
+        return -1;
+      }
+    });
+    return array
+  }
+
   get x() {
+    const keys = this.y.map(i => i.date);
+    const values = this.y.map(i => i.value);
     return {
       grid: {
         left: 0,
@@ -64,18 +88,13 @@ export default class Statistics extends Vue {
       },
       tooltip: {
         show: true,
-        triggerOn:'click',
-        position:'top',
-        formatter:'{c}',
+        triggerOn: 'click',
+        position: 'top',
+        formatter: '{c}',
       },
       xAxis: {
         type: 'category',
-        data: [
-          '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-          '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-          '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-
-        ],
+        data: keys,
         axisTick: {
           alignWithLabel: true,
         },
@@ -87,11 +106,7 @@ export default class Statistics extends Vue {
       },
       series: [
         {
-          data: [
-            150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
-            150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
-            150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
-          ],
+          data: values,
           type: 'line',
           symbolSize: 12,
           symbol: 'circle',
@@ -100,7 +115,7 @@ export default class Statistics extends Vue {
           },
           itemStyle: {
             borderColor: '#666',
-            color:'#666',
+            color: '#666',
           }
         }
       ]
@@ -142,7 +157,8 @@ export default class Statistics extends Vue {
   }
 
   mounted() {
-    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+    const div = (this.$refs.chartWrapper as HTMLDivElement);
+    div.scrollLeft = div.scrollWidth;
   }
 
   type = '-';
