@@ -1,17 +1,17 @@
 <template>
-  <div class="wrapper" ref="wrapper">chart</div>
+  <div class="wrapper" ref="wrapper"></div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import echarts, {EChartOption} from 'echarts';
+import * as echarts from 'echarts';
+import {EChartOption} from 'echarts';
 @Component
 export default class Chart extends Vue {
   @Prop() options?:EChartOption;
 
   mounted(){
-    console.log(this.options);
     if(this.options === undefined){
       return console.error('options 为空')
     }
@@ -22,7 +22,5 @@ export default class Chart extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.wrapper{
 
-}
 </style>

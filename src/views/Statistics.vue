@@ -1,7 +1,9 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-    <Chart :options="x" class="chart"/>
+    <div class="chart-wrapper" ref="chartWrapper">
+      <Chart :options="x" class="chart" ref="chart"/>
+    </div>
     <ol v-if="groupedList.length>0">
       <li v-for="(group,index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
@@ -31,7 +33,7 @@ import Chart from '@/components/Chart.vue';
 
 
 @Component({
-  components: {Tabs,Chart}
+  components: {Tabs, Chart}
 })
 export default class Statistics extends Vue {
   beautify(string: string) {
@@ -54,22 +56,36 @@ export default class Statistics extends Vue {
     return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
   }
 
-  get x(){
+  get x() {
     return {
+      grid:{
+        left:0,
+        right:0,
+      },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: [
+          '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+          '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+          '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+
+        ]
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        show: false
       },
       series: [
         {
-          data: [150, 230, 224, 218, 135, 147, 260],
+          data: [
+            150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
+            150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
+            150, 230, 224, 218, 135, 147, 260, 218, 135, 147,
+          ],
           type: 'line'
         }
       ]
-    }
+    };
   }
 
   get recordList() {
@@ -106,16 +122,29 @@ export default class Statistics extends Vue {
     this.$store.commit('fetchRecords');
   }
 
+  mounted() {
+    console.log('1');
+    const div1 = (this.$refs.chartWrapper) as HTMLDivElement
+    console.log(div1)
+    div1.scrollLeft = 9999;
+    console.log(div1.scrollLeft);
+  }
+
   type = '-';
   recordTypeList = recordTypeList;
 }
 </script>
 
 <style lang="scss" scoped>
-.chart{
-  max-width: 100%;
+.chart {
+  width: 430%;
   height: 400px;
+
+  &-wrapper {
+    overflow:auto;
+  }
 }
+
 .noResult {
   padding: 16px;
   text-align: center;
