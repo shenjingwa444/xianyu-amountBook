@@ -1,6 +1,7 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
+    <Chart :options="x" class="chart"/>
     <ol v-if="groupedList.length>0">
       <li v-for="(group,index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
@@ -26,10 +27,11 @@ import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
 import dayjs from 'dayjs';
 import clone from '@/components/lib/clone';
+import Chart from '@/components/Chart.vue';
 
 
 @Component({
-  components: {Tabs}
+  components: {Tabs,Chart}
 })
 export default class Statistics extends Vue {
   beautify(string: string) {
@@ -50,6 +52,24 @@ export default class Statistics extends Vue {
 
   tagString(tags: Tag[]) {
     return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
+  }
+
+  get x(){
+    return {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [150, 230, 224, 218, 135, 147, 260],
+          type: 'line'
+        }
+      ]
+    }
   }
 
   get recordList() {
@@ -92,6 +112,10 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.chart{
+  max-width: 100%;
+  height: 400px;
+}
 .noResult {
   padding: 16px;
   text-align: center;
